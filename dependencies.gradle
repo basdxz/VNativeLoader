@@ -1,4 +1,14 @@
 dependencies {
+    // Apache Commons
+    implementation("commons-io:commons-io:2.11.0")
+    implementation("commons-codec:commons-codec:1.15")
+
+    // JetBrains Static Analysis
+    compileOnly("org.jetbrains:annotations:24.0.1")
+
+    // SLF4J
+    implementation("org.slf4j:slf4j-api:1.7.32")
+
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.26")
     annotationProcessor("org.projectlombok:lombok:1.18.26")
@@ -8,6 +18,16 @@ dependencies {
     // JUnit
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.9.3")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
+
+    // Log4J
+    testRuntimeOnly("org.apache.logging.log4j:log4j-api:2.14.1")
+    testRuntimeOnly("org.apache.logging.log4j:log4j-core:2.14.1")
+    testRuntimeOnly("org.apache.logging.log4j:log4j-slf4j-impl:2.14.1")
+
+    // LWJGL 2
+    testImplementation("org.lwjgl.lwjgl:lwjgl:2.9.4-nightly-20150209")
+    testImplementation("org.lwjgl.lwjgl:lwjgl_util:2.9.4-nightly-20150209")
+    testImplementation("org.lwjgl.lwjgl:lwjgl-platform:2.9.4-nightly-20150209")
 }
 
 test {

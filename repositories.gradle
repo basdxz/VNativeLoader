@@ -1,4 +1,10 @@
 repositories {
     mavenCentral()
     mavenLocal()
+
+    // Source for LWJGL 2 Nightly
+    maven {
+        name = "Velocity"
+        url = "https://nexus.velocitypowered.com/repository/maven-public"
+    }
 }
