@@ -1,0 +1,51 @@
+plugins {
+    id 'java-library'
+    id 'idea'
+    id 'com.palantir.git-version' version '3.0.0'
+    id 'maven-publish'
+}
+
+try {
+    version = gitVersion()
+} catch (Exception e) {
+    version = "SNAPSHOT"
+
+    e.printStackTrace()
+
+    System.err.println("\nThis project must be version controlled by Git AND the repository must provide at least one tag!")
+    System.err.println("The version has defaulted to \"" + version + "\"")
+}
+
+def checkPropertyExists(String propertyName) {
+    if (!project.hasProperty(propertyName)) {
+        throw new GradleException("This project requires a property \"" + propertyName + "\"! Please add it your \"gradle.properties\".")
+    }
+}
+
+checkPropertyExists("projectGroup")
+checkPropertyExists("expectedJavaVersion")
+
+group projectGroup
+version "SNAPSHOT"
+
+if (JavaVersion.current() != JavaVersion.toVersion(expectedJavaVersion)) {
+    throw new GradleException("This project requires Java " + expectedJavaVersion + " , but it's running on " + JavaVersion.current())
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(expectedJavaVersion))
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = true
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+apply from: 'repositories.gradle'
+apply from: 'dependencies.gradle'
+apply from: 'publish.gradle'
