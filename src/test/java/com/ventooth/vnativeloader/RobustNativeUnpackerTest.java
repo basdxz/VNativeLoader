@@ -1,4 +1,4 @@
-package ven.vnativeloader;
+package com.ventooth.vnativeloader;
 
 import lombok.*;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -12,7 +12,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static ven.vnativeloader.RobustNativeUnpacker.robustNativeUnpacker;
 
 @DisplayName("Robust Native Unpacker")
 class RobustNativeUnpackerTest {
@@ -22,7 +21,7 @@ class RobustNativeUnpackerTest {
     @Test
     @DisplayName("Unpack Native")
     void unpackNative() {
-        val unpacker = robustNativeUnpacker();
+        val unpacker = RobustNativeUnpacker.robustNativeUnpacker();
 
         val path = new File("test/lwjgl.dll").toPath();
 
