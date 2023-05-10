@@ -4,9 +4,12 @@ package com.ventooth.vnativeloader;
 import com.ventooth.vnativeloader.internal.DefaultNativeLoader;
 import com.ventooth.vnativeloader.internal.DefaultNativeNameMapper;
 import com.ventooth.vnativeloader.internal.DefaultNativeUnpacker;
+import lombok.*;
 import lombok.experimental.*;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Path;
 
 
@@ -22,12 +25,29 @@ public final class VNativeLoaderAPI {
         NATIVE_LOADER = new DefaultNativeLoader(NATIVE_NAME_MAPPER, NATIVE_UNPACKER, defaultNativesDirectory());
     }
 
-    public static void main(String[] args) throws IOException {
-        loadNative("lwjgl64");
+    public static void loadNative(@NonNull String nativeName)
+            throws IOException, UnsatisfiedLinkError {
+        NATIVE_LOADER.loadNative(nativeName);
     }
 
-    public static void loadNative(String nativeName) throws IOException {
-        NATIVE_LOADER.loadNative(nativeName);
+    public static void loadNative(@NonNull String nativeName, @NonNull String classPathName)
+            throws IOException, UnsatisfiedLinkError {
+        NATIVE_LOADER.loadNative(nativeName, classPathName);
+    }
+
+    public static void loadNative(@NonNull String nativeName, @NonNull URL url)
+            throws IOException, UnsatisfiedLinkError {
+        NATIVE_LOADER.loadNative(nativeName, url);
+    }
+
+    public static void loadNative(@NonNull String nativeName, @NonNull InputStream inputStream)
+            throws IOException, UnsatisfiedLinkError {
+        NATIVE_LOADER.loadNative(nativeName, inputStream);
+    }
+
+    public static void loadNative(@NonNull String nativeName, byte @NonNull [] bytes)
+            throws IOException, UnsatisfiedLinkError {
+        NATIVE_LOADER.loadNative(nativeName, bytes);
     }
 
     public static VNativeNameMapper nativeNameMapper() {
