@@ -29,14 +29,8 @@ jobs:
           distribution: 'adopt'
           cache: gradle
 
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
       - name: Build the project
-        run: ./gradlew build
-
-      - name: Check what changed
-        run: git diff-index HEAD --
+        run: /bin/sh ./gradlew build
 
       - name: Release under current tag
         uses: "marvinpinto/action-automatic-releases@latest"
