@@ -26,7 +26,6 @@ checkPropertyExists("projectGroup")
 checkPropertyExists("expectedJavaVersion")
 
 group projectGroup
-version "SNAPSHOT"
 
 if (JavaVersion.current() != JavaVersion.toVersion(expectedJavaVersion)) {
     throw new GradleException("This project requires Java " + expectedJavaVersion + " , but it's running on " + JavaVersion.current())
