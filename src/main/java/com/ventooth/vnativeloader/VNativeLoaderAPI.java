@@ -1,6 +1,7 @@
 package com.ventooth.vnativeloader;
 
 
+import com.ventooth.vnativeloader.internal.DefaultNativeLinker;
 import com.ventooth.vnativeloader.internal.DefaultNativeLoader;
 import com.ventooth.vnativeloader.internal.DefaultNativeNameMapper;
 import com.ventooth.vnativeloader.internal.DefaultNativeUnpacker;
@@ -17,12 +18,17 @@ import java.nio.file.Path;
 public final class VNativeLoaderAPI {
     private static final DefaultNativeNameMapper NATIVE_NAME_MAPPER;
     private static final DefaultNativeUnpacker NATIVE_UNPACKER;
+    private static final DefaultNativeLinker NATIVE_LINKER;
     private static final DefaultNativeLoader NATIVE_LOADER;
 
     static {
         NATIVE_NAME_MAPPER = new DefaultNativeNameMapper();
         NATIVE_UNPACKER = new DefaultNativeUnpacker();
-        NATIVE_LOADER = new DefaultNativeLoader(NATIVE_NAME_MAPPER, NATIVE_UNPACKER, defaultNativesDirectory());
+        NATIVE_LINKER = new DefaultNativeLinker();
+        NATIVE_LOADER = new DefaultNativeLoader(NATIVE_NAME_MAPPER,
+                                                NATIVE_UNPACKER,
+                                                NATIVE_LINKER,
+                                                defaultNativesDirectory());
     }
 
     public static void loadNative(@NonNull String nativeName)
@@ -59,7 +65,10 @@ public final class VNativeLoaderAPI {
     }
 
     public static VNativeLoader<?> createNativeLoader() {
-        return new DefaultNativeLoader(NATIVE_NAME_MAPPER, NATIVE_UNPACKER, defaultNativesDirectory());
+        return new DefaultNativeLoader(NATIVE_NAME_MAPPER,
+                                       NATIVE_UNPACKER,
+                                       NATIVE_LINKER,
+                                       defaultNativesDirectory());
     }
 
     public static Path defaultNativesDirectory() {

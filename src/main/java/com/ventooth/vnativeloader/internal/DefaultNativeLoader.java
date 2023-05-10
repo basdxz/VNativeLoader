@@ -1,5 +1,6 @@
 package com.ventooth.vnativeloader.internal;
 
+import com.ventooth.vnativeloader.VNativeLinker;
 import com.ventooth.vnativeloader.VNativeLoader;
 import com.ventooth.vnativeloader.VNativeNameMapper;
 import com.ventooth.vnativeloader.VNativeUnpacker;
@@ -26,6 +27,8 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
     @NonNull
     private VNativeUnpacker unpacker;
     @NonNull
+    private VNativeLinker linker;
+    @NonNull
     private Path nativeDirectoryPath;
 
     @Override
@@ -35,7 +38,7 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
         val nativeFilePath = nativeDirectoryPath.resolve(actualNativeName);
 
         val unpackedNativeFilePath = unpacker.unpackNative(actualNativeName, nativeFilePath);
-        loadUsingJNI(unpackedNativeFilePath);
+        linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {}", nativeName);
     }
@@ -48,7 +51,7 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
         val actualNativeClassPathName = nativeClassPathPlatformName(classPathName);
 
         val unpackedNativeFilePath = unpacker.unpackNative(actualNativeClassPathName, nativeFilePath);
-        loadUsingJNI(unpackedNativeFilePath);
+        linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {} from class path: {}", nativeName, classPathName);
     }
@@ -60,7 +63,7 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
         val nativeFilePath = nativeDirectoryPath.resolve(actualNativeName);
 
         val unpackedNativeFilePath = unpacker.unpackNative(url, nativeFilePath);
-        loadUsingJNI(unpackedNativeFilePath);
+        linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {} from url: {}", nativeName, url);
     }
@@ -72,7 +75,7 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
         val nativeFilePath = nativeDirectoryPath.resolve(actualNativeName);
 
         val unpackedNativeFilePath = unpacker.unpackNative(inputStream, nativeFilePath);
-        loadUsingJNI(unpackedNativeFilePath);
+        linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {} from input stream", nativeName);
     }
@@ -84,7 +87,7 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
         val nativeFilePath = nativeDirectoryPath.resolve(actualNativeName);
 
         val unpackedNativeFilePath = unpacker.unpackNative(bytes, nativeFilePath);
-        loadUsingJNI(unpackedNativeFilePath);
+        linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {} from bytes", nativeName);
     }
@@ -103,15 +106,5 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
         Arrays.stream(pathElements)
               .forEach(nativeClassPathPlatformName::add);
         return nativeClassPathPlatformName.toString();
-    }
-
-    private static void loadUsingJNI(Path nativeFilePath) {
-        val fullPath = nativeFilePath.toAbsolutePath().toString();
-        try {
-            System.load(fullPath);
-            LOG.trace("Loaded native using JNI: {}", fullPath);
-        } catch (UnsatisfiedLinkError e) {
-            throw new UnsatisfiedLinkError("Failed to load native: %s".formatted(fullPath));
-        }
     }
 }

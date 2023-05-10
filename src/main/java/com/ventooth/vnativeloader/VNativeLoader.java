@@ -17,6 +17,10 @@ public interface VNativeLoader<SELF extends VNativeLoader<? extends SELF>> {
 
     VNativeUnpacker unpacker();
 
+    SELF linker(@NonNull VNativeLinker linker);
+
+    VNativeLinker linker();
+
     Path nativeDirectoryPath();
 
     SELF nativeDirectoryPath(@NonNull Path nativeDirectoryPath);
