@@ -18,7 +18,7 @@ import java.util.StringJoiner;
 @Getter
 @AllArgsConstructor
 public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
-    private static final Logger LOG = LoggerFactory.getLogger("NativeLoader");
+    private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader");
 
     @NonNull
     private VNativeNameMapper nameMapper;
@@ -35,6 +35,8 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
 
         val unpackedNativeFilePath = unpacker.unpackNative(actualNativeName, nativeFilePath);
         loadUsingJNI(unpackedNativeFilePath);
+
+        LOG.debug("Loaded native: {}", nativeName);
     }
 
     @Override
@@ -46,6 +48,8 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
 
         val unpackedNativeFilePath = unpacker.unpackNative(actualNativeClassPathName, nativeFilePath);
         loadUsingJNI(unpackedNativeFilePath);
+
+        LOG.debug("Loaded native: {} from class path: {}", nativeName, classPathName);
     }
 
     @Override
@@ -56,6 +60,8 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
 
         val unpackedNativeFilePath = unpacker.unpackNative(url, nativeFilePath);
         loadUsingJNI(unpackedNativeFilePath);
+
+        LOG.debug("Loaded native: {} from url: {}", nativeName, url);
     }
 
     @Override
@@ -66,6 +72,8 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
 
         val unpackedNativeFilePath = unpacker.unpackNative(inputStream, nativeFilePath);
         loadUsingJNI(unpackedNativeFilePath);
+
+        LOG.debug("Loaded native: {} from input stream", nativeName);
     }
 
     @Override
@@ -76,6 +84,8 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
 
         val unpackedNativeFilePath = unpacker.unpackNative(bytes, nativeFilePath);
         loadUsingJNI(unpackedNativeFilePath);
+
+        LOG.debug("Loaded native: {} from bytes", nativeName);
     }
 
     private String nativeClassPathPlatformName(String classPathName) {
@@ -95,6 +105,12 @@ public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
     }
 
     private static void loadUsingJNI(Path nativeFilePath) {
-        System.load(nativeFilePath.toAbsolutePath().toString());
+        val fullPath = nativeFilePath.toAbsolutePath().toString();
+        try {
+            System.load(fullPath);
+            LOG.trace("Loaded native using JNI: {}", fullPath);
+        } catch (UnsatisfiedLinkError e) {
+            throw new UnsatisfiedLinkError("Failed to load native: %s".formatted(fullPath));
+        }
     }
 }

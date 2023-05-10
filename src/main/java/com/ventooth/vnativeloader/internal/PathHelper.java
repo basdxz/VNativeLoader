@@ -17,26 +17,27 @@ public final class PathHelper {
 
     public static Optional<byte[]> readFile(Path filePath) throws IOException {
         if (Files.isDirectory(filePath))
-            throw new IOException("File path is a directory.");
+            throw new IOException("File path: %s is a directory".formatted(filePath.toAbsolutePath()));
 
         if (!Files.isRegularFile(filePath)) {
-            // log
+            LOG.trace("File: {} not found", filePath.toAbsolutePath());
             return Optional.empty();
         }
 
         val bytes = FileUtils.readFileToByteArray(filePath.toFile());
-        // log
+        LOG.trace("Read: {} bytes from file: {}", bytes.length, filePath.toAbsolutePath());
+
         return Optional.of(bytes);
     }
 
     public static void writeFile(byte[] bytes, Path filePath) throws IOException {
         if (Files.isDirectory(filePath))
-            throw new IOException("Output path is a directory.");
+            throw new IOException("File path: %s is a directory".formatted(filePath.toAbsolutePath()));
 
         if (Files.deleteIfExists(filePath))
             LOG.trace("Found and deleted existing file: {}", filePath.toAbsolutePath());
 
         FileUtils.writeByteArrayToFile(filePath.toFile(), bytes);
-        LOG.trace("Wrote bytes to file: {}", filePath.toAbsolutePath());
+        LOG.trace("Wrote: {} bytes to file: {}", bytes.length, filePath.toAbsolutePath());
     }
 }

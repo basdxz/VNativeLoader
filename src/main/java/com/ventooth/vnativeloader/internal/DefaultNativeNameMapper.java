@@ -7,11 +7,12 @@ import org.slf4j.LoggerFactory;
 
 @NoArgsConstructor
 public class DefaultNativeNameMapper implements VNativeNameMapper {
-    private static final Logger LOG = LoggerFactory.getLogger("NativeMapper");
+    private static final Logger LOG = LoggerFactory.getLogger("VNativeNameMapper");
 
     @Override
     public String mapNativeToPlatformName(@NonNull String nativeName) {
-        // logging
-        return System.mapLibraryName(nativeName);
+        val platformNativeName = System.mapLibraryName(nativeName);
+        LOG.trace("Mapped native name: {} to platform native name: {}", nativeName, platformNativeName);
+        return platformNativeName;
     }
 }
