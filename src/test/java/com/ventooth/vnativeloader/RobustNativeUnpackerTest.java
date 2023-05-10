@@ -1,5 +1,6 @@
 package com.ventooth.vnativeloader;
 
+import com.ventooth.vnativeloader.internal.DefaultNativeUnpacker;
 import lombok.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;
@@ -21,7 +22,7 @@ class RobustNativeUnpackerTest {
     @Test
     @DisplayName("Unpack Native")
     void unpackNative() {
-        val unpacker = RobustNativeUnpacker.robustNativeUnpacker();
+        val unpacker = DefaultNativeUnpacker.nativeUnpacker();
 
         val path = new File("test/lwjgl.dll").toPath();
 

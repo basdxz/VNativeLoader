@@ -1,4 +1,4 @@
-package com.ventooth.vnativeloader;
+package com.ventooth.vnativeloader.internal;
 
 import lombok.experimental.*;
 import lombok.*;
@@ -6,16 +6,14 @@ import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
-import java.util.StringJoiner;
 
 @UtilityClass
 public final class PathHelper {
-    private static final Logger LOG = LoggerFactory.getLogger("Path Helper");
+    private static final Logger LOG = LoggerFactory.getLogger("PathHelper");
 
     public static Optional<byte[]> readFile(Path filePath) throws IOException {
         if (Files.isDirectory(filePath))
@@ -40,25 +38,5 @@ public final class PathHelper {
 
         FileUtils.writeByteArrayToFile(filePath.toFile(), bytes);
         LOG.trace("Wrote bytes to file: {}", filePath.toAbsolutePath());
-    }
-
-    public static void appendDirectoryToProperty(String propertyKey, Path directoryPath) {
-        if (!Files.isDirectory(directoryPath))
-            throw new IllegalArgumentException();
-
-        val newProperty = new StringJoiner(File.pathSeparator);
-
-        val oldProperty = System.getProperty(propertyKey);
-        if (oldProperty != null) {
-            newProperty.add(oldProperty);
-            // log
-        } else {
-            // log
-        }
-
-        newProperty.add(directoryPath.toAbsolutePath().toString());
-
-        System.setProperty(propertyKey, newProperty.toString());
-        // log
     }
 }

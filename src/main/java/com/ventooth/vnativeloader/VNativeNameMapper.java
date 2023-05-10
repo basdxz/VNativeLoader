@@ -1,6 +1,9 @@
 package com.ventooth.vnativeloader;
 
-public interface VPlatformNativeMapper {
+import lombok.*;
+
+@FunctionalInterface
+public interface VNativeNameMapper {
     /**
      * Remaps the name of a native library to it's platform specific name.
      *  TODO: Example
@@ -8,5 +11,5 @@ public interface VPlatformNativeMapper {
      * @param nativeName Name of the native to map.
      * @return Platform specific native name.
      */
-    String mapToPlatformName(String nativeName);
+    String mapNativeToPlatformName(@NonNull String nativeName);
 }
