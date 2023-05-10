@@ -35,6 +35,9 @@ jobs:
       - name: Build the project
         run: ./gradlew build
 
+      - name: Check what changed
+        run: git diff-index HEAD --
+
       - name: Release under current tag
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
