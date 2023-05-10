@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Path;
 
+// TODO: Documentation
 public interface VNativeUnpacker {
     Path unpackNative(@NonNull String classPathName, @NonNull Path nativeFilePath) throws IOException;
 

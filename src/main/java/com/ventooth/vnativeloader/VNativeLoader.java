@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Path;
 
+// TODO: Documentation
 public interface VNativeLoader<SELF extends VNativeLoader<? extends SELF>> {
     SELF nameMapper(@NonNull VNativeNameMapper nameMapper);
 

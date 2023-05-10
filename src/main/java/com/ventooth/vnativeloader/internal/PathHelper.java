@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
+// TODO: Documentation
 @UtilityClass
 public final class PathHelper {
     private static final Logger LOG = LoggerFactory.getLogger("PathHelper");
