@@ -1,9 +1,11 @@
-package com.ventooth.vnativeloader;
+package com.ventooth.vnativeloader.test;
 
+import com.ventooth.vnativeloader.api.VNativeLoaderAPI;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-import org.lwjgl.opengl.*;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 
 class LWJGL2NativesTest {
     @Test

@@ -1,14 +1,16 @@
 package com.ventooth.vnativeloader.internal;
 
-import com.ventooth.vnativeloader.VNativeNameMapper;
-import lombok.*;
+import com.ventooth.vnativeloader.api.VNativeNameMapper;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 // TODO: Documentation
 @NoArgsConstructor
-public class DefaultNativeNameMapper implements VNativeNameMapper {
-    private static final Logger LOG = LoggerFactory.getLogger("VNativeNameMapper");
+public class NameMapper implements VNativeNameMapper {
+    private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader|NameMapper");
 
     @Override
     public String mapNativeToPlatformName(@NonNull String nativeName) {

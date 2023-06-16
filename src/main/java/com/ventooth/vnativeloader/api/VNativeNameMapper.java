@@ -1,6 +1,6 @@
-package com.ventooth.vnativeloader;
+package com.ventooth.vnativeloader.api;
 
-import lombok.*;
+import lombok.NonNull;
 
 // TODO: Documentation
 @FunctionalInterface

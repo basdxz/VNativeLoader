@@ -1,12 +1,12 @@
-package com.ventooth.vnativeloader;
+package com.ventooth.vnativeloader.api;
 
 
-import com.ventooth.vnativeloader.internal.DefaultNativeLinker;
-import com.ventooth.vnativeloader.internal.DefaultNativeLoader;
-import com.ventooth.vnativeloader.internal.DefaultNativeNameMapper;
-import com.ventooth.vnativeloader.internal.DefaultNativeUnpacker;
-import lombok.*;
-import lombok.experimental.*;
+import com.ventooth.vnativeloader.internal.Linker;
+import com.ventooth.vnativeloader.internal.Loader;
+import com.ventooth.vnativeloader.internal.NameMapper;
+import com.ventooth.vnativeloader.internal.Unpacker;
+import lombok.NonNull;
+import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,19 +16,19 @@ import java.nio.file.Path;
 // TODO: Documentation
 @UtilityClass
 public final class VNativeLoaderAPI {
-    private static final DefaultNativeNameMapper NATIVE_NAME_MAPPER;
-    private static final DefaultNativeUnpacker NATIVE_UNPACKER;
-    private static final DefaultNativeLinker NATIVE_LINKER;
-    private static final DefaultNativeLoader NATIVE_LOADER;
+    private static final NameMapper NATIVE_NAME_MAPPER;
+    private static final Unpacker NATIVE_UNPACKER;
+    private static final Linker NATIVE_LINKER;
+    private static final Loader NATIVE_LOADER;
 
     static {
-        NATIVE_NAME_MAPPER = new DefaultNativeNameMapper();
-        NATIVE_UNPACKER = new DefaultNativeUnpacker();
-        NATIVE_LINKER = new DefaultNativeLinker();
-        NATIVE_LOADER = new DefaultNativeLoader(NATIVE_NAME_MAPPER,
-                                                NATIVE_UNPACKER,
-                                                NATIVE_LINKER,
-                                                defaultNativesDirectory());
+        NATIVE_NAME_MAPPER = new NameMapper();
+        NATIVE_UNPACKER = new Unpacker();
+        NATIVE_LINKER = new Linker();
+        NATIVE_LOADER = new Loader(NATIVE_NAME_MAPPER,
+                                   NATIVE_UNPACKER,
+                                   NATIVE_LINKER,
+                                   defaultNativesDirectory());
     }
 
     public static void loadNative(@NonNull String nativeName)
@@ -65,10 +65,10 @@ public final class VNativeLoaderAPI {
     }
 
     public static VNativeLoader<?> createNativeLoader() {
-        return new DefaultNativeLoader(NATIVE_NAME_MAPPER,
-                                       NATIVE_UNPACKER,
-                                       NATIVE_LINKER,
-                                       defaultNativesDirectory());
+        return new Loader(NATIVE_NAME_MAPPER,
+                          NATIVE_UNPACKER,
+                          NATIVE_LINKER,
+                          defaultNativesDirectory());
     }
 
     public static Path defaultNativesDirectory() {

@@ -1,7 +1,7 @@
 package com.ventooth.vnativeloader.internal;
 
-import lombok.experimental.*;
-import lombok.*;
+import lombok.experimental.UtilityClass;
+import lombok.val;
 import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,7 @@ import java.util.Optional;
 // TODO: Documentation
 @UtilityClass
 public final class PathHelper {
-    private static final Logger LOG = LoggerFactory.getLogger("PathHelper");
+    private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader|PathHelper");
 
     public static Optional<byte[]> readFile(Path filePath) throws IOException {
         if (Files.isDirectory(filePath))

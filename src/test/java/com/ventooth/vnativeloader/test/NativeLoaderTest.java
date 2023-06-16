@@ -1,5 +1,7 @@
-package com.ventooth.vnativeloader;
+package com.ventooth.vnativeloader.test;
 
+import com.ventooth.vnativeloader.api.VNativeLoader;
+import com.ventooth.vnativeloader.api.VNativeLoaderAPI;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 

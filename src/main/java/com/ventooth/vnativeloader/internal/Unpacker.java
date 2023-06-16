@@ -1,8 +1,10 @@
 package com.ventooth.vnativeloader.internal;
 
-import com.ventooth.vnativeloader.VNativeLoaderAPI;
-import com.ventooth.vnativeloader.VNativeUnpacker;
-import lombok.*;
+import com.ventooth.vnativeloader.api.VNativeLoaderAPI;
+import com.ventooth.vnativeloader.api.VNativeUnpacker;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.val;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -16,8 +18,8 @@ import java.nio.file.Path;
 
 // TODO: Documentation
 @NoArgsConstructor
-public class DefaultNativeUnpacker implements VNativeUnpacker {
-    private static final Logger LOG = LoggerFactory.getLogger("VNativeUnpacker");
+public class Unpacker implements VNativeUnpacker {
+    private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader|Unpacker");
 
     @Override
     public Path unpackNative(@NonNull String classPathName, @NonNull Path nativeFilePath) throws IOException {

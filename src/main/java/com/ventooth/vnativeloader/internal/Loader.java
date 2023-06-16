@@ -1,9 +1,9 @@
 package com.ventooth.vnativeloader.internal;
 
-import com.ventooth.vnativeloader.VNativeLinker;
-import com.ventooth.vnativeloader.VNativeLoader;
-import com.ventooth.vnativeloader.VNativeNameMapper;
-import com.ventooth.vnativeloader.VNativeUnpacker;
+import com.ventooth.vnativeloader.api.VNativeLinker;
+import com.ventooth.vnativeloader.api.VNativeLoader;
+import com.ventooth.vnativeloader.api.VNativeNameMapper;
+import com.ventooth.vnativeloader.api.VNativeUnpacker;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,7 +19,7 @@ import java.util.StringJoiner;
 @Setter
 @Getter
 @AllArgsConstructor
-public class DefaultNativeLoader implements VNativeLoader<DefaultNativeLoader> {
+public class Loader implements VNativeLoader<Loader> {
     private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader");
 
     @NonNull

@@ -1,7 +1,9 @@
 package com.ventooth.vnativeloader.internal;
 
-import com.ventooth.vnativeloader.VNativeLinker;
-import lombok.*;
+import com.ventooth.vnativeloader.api.VNativeLinker;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,8 +11,8 @@ import java.nio.file.Path;
 
 // TODO: Documentation
 @NoArgsConstructor
-public class DefaultNativeLinker implements VNativeLinker {
-    private static final Logger LOG = LoggerFactory.getLogger("VNativeLinker");
+public class Linker implements VNativeLinker {
+    private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader|VNativeLinker");
 
     @Override
     public void linkNative(@NonNull Path nativeFilePath) throws UnsatisfiedLinkError {
