@@ -1,9 +1,9 @@
 package com.ventooth.vnativeloader.internal;
 
+import com.ventooth.vnativeloader.api.VNativeLinker;
 import com.ventooth.vnativeloader.api.VNativeLoader;
 import com.ventooth.vnativeloader.api.VNativeNameMapper;
 import com.ventooth.vnativeloader.api.VNativeUnpacker;
-import com.ventooth.vnativeloader.api.VNativeLinker;
 import lombok.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,7 @@ public final class Loader implements VNativeLoader<Loader> {
     private Path nativeDirectory;
 
     @Override
-    public void loadNative(@NonNull String nativeName)
+    public Loader loadNative(@NonNull String nativeName)
             throws IOException, UnsatisfiedLinkError {
         val actualNativeName = nameMapper.mapNativeToPlatformName(nativeName);
         val nativeFilePath = nativeDirectory.resolve(actualNativeName);
@@ -41,10 +41,11 @@ public final class Loader implements VNativeLoader<Loader> {
         linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {}", nativeName);
+        return this;
     }
 
     @Override
-    public void loadNative(@NonNull String nativeName, @NonNull String classPathName)
+    public Loader loadNative(@NonNull String nativeName, @NonNull String classPathName)
             throws IOException, UnsatisfiedLinkError {
         val actualNativeName = nameMapper.mapNativeToPlatformName(nativeName);
         val nativeFilePath = nativeDirectory.resolve(actualNativeName);
@@ -54,10 +55,11 @@ public final class Loader implements VNativeLoader<Loader> {
         linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {} from class path: {}", nativeName, classPathName);
+        return this;
     }
 
     @Override
-    public void loadNative(@NonNull String nativeName, @NonNull URI uri)
+    public Loader loadNative(@NonNull String nativeName, @NonNull URI uri)
             throws IOException, UnsatisfiedLinkError {
         val actualNativeName = nameMapper.mapNativeToPlatformName(nativeName);
         val nativeFilePath = nativeDirectory.resolve(actualNativeName);
@@ -66,10 +68,11 @@ public final class Loader implements VNativeLoader<Loader> {
         linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {} from uri: {}", nativeName, uri);
+        return this;
     }
 
     @Override
-    public void loadNative(@NonNull String nativeName, @NonNull InputStream inputStream)
+    public Loader loadNative(@NonNull String nativeName, @NonNull InputStream inputStream)
             throws IOException, UnsatisfiedLinkError {
         val actualNativeName = nameMapper.mapNativeToPlatformName(nativeName);
         val nativeFilePath = nativeDirectory.resolve(actualNativeName);
@@ -78,10 +81,11 @@ public final class Loader implements VNativeLoader<Loader> {
         linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {} from input stream", nativeName);
+        return this;
     }
 
     @Override
-    public void loadNative(@NonNull String nativeName, byte @NonNull [] bytes)
+    public Loader loadNative(@NonNull String nativeName, byte @NonNull [] bytes)
             throws IOException, UnsatisfiedLinkError {
         val actualNativeName = nameMapper.mapNativeToPlatformName(nativeName);
         val nativeFilePath = nativeDirectory.resolve(actualNativeName);
@@ -90,6 +94,7 @@ public final class Loader implements VNativeLoader<Loader> {
         linker.linkNative(unpackedNativeFilePath);
 
         LOG.debug("Loaded native: {} from bytes", nativeName);
+        return this;
     }
 
     private String nativeClassPathPlatformName(String classPathName) {

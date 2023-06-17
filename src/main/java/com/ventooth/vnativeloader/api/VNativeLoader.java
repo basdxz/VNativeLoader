@@ -8,20 +8,21 @@ import java.net.URI;
 import java.nio.file.Path;
 
 // TODO: Documentation
+@SuppressWarnings("UnusedReturnValue")
 public interface VNativeLoader<SELF extends VNativeLoader<? extends SELF>> {
-    void loadNative(@NotNull String nativeName)
+    SELF loadNative(@NotNull String nativeName)
             throws IOException, UnsatisfiedLinkError;
 
-    void loadNative(@NotNull String nativeName, @NotNull String classPathName)
+    SELF loadNative(@NotNull String nativeName, @NotNull String classPathName)
             throws IOException, UnsatisfiedLinkError;
 
-    void loadNative(@NotNull String nativeName, @NotNull URI uri)
+    SELF loadNative(@NotNull String nativeName, @NotNull URI uri)
             throws IOException, UnsatisfiedLinkError;
 
-    void loadNative(@NotNull String nativeName, @NotNull InputStream inputStream)
+    SELF loadNative(@NotNull String nativeName, @NotNull InputStream inputStream)
             throws IOException, UnsatisfiedLinkError;
 
-    void loadNative(@NotNull String nativeName, byte @NotNull [] bytes)
+    SELF loadNative(@NotNull String nativeName, byte @NotNull [] bytes)
             throws IOException, UnsatisfiedLinkError;
 
     SELF nameMapper(@NotNull VNativeNameMapper nameMapper);
