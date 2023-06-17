@@ -1,7 +1,7 @@
 package com.ventooth.vnativeloader.internal;
 
-import com.ventooth.vnativeloader.api.VNativeLoaderAPI;
 import com.ventooth.vnativeloader.api.VNativeUnpacker;
+import com.ventooth.vnativeloader.api.VNativeLoaderAPI;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.val;
@@ -12,13 +12,13 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 // TODO: Documentation
 @NoArgsConstructor
-public class Unpacker implements VNativeUnpacker {
+public final class Unpacker implements VNativeUnpacker {
     private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader|Unpacker");
 
     @Override
@@ -34,10 +34,10 @@ public class Unpacker implements VNativeUnpacker {
     }
 
     @Override
-    public Path unpackNative(@NonNull URL url, @NonNull Path nativeFilePath) throws IOException {
-        try (val nativeInputStream = url.openStream()) {
+    public Path unpackNative(@NonNull URI uri, @NonNull Path nativeFilePath) throws IOException {
+        try (val nativeInputStream = uri.toURL().openStream()) {
             if (nativeInputStream == null)
-                throw new IOException("Failed to get native from URL: %s ".formatted(url));
+                throw new IOException("Failed to get native from URI: %s ".formatted(uri));
 
             return unpackNative(nativeInputStream, nativeFilePath);
         }

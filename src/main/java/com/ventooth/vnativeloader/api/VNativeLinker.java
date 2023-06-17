@@ -1,11 +1,11 @@
 package com.ventooth.vnativeloader.api;
 
-import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.nio.file.Path;
 
 // TODO: Documentation
 @FunctionalInterface
 public interface VNativeLinker {
-    void linkNative(@NonNull Path nativeFilePath) throws UnsatisfiedLinkError;
+    void linkNative(@NotNull Path nativeFilePath) throws UnsatisfiedLinkError;
 }

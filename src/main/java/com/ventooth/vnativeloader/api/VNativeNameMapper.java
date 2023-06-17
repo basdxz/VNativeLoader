@@ -1,9 +1,9 @@
 package com.ventooth.vnativeloader.api;
 
-import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 // TODO: Documentation
 @FunctionalInterface
 public interface VNativeNameMapper {
-    String mapNativeToPlatformName(@NonNull String nativeName);
+    String mapNativeToPlatformName(@NotNull String nativeName);
 }

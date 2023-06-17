@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 // TODO: Documentation
 @NoArgsConstructor
-public class NameMapper implements VNativeNameMapper {
+public final class NameMapper implements VNativeNameMapper {
     private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader|NameMapper");
 
     @Override

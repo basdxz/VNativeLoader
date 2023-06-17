@@ -12,7 +12,7 @@ class NativeNameMapperTest {
 
     @BeforeAll
     static void init() {
-        NATIVE_NAME_MAPPER = VNativeLoaderAPI.nativeNameMapper();
+        NATIVE_NAME_MAPPER = VNativeLoaderAPI.createNameMapper();
     }
 
     @AfterAll

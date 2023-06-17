@@ -4,7 +4,7 @@ dependencies {
     implementation("commons-codec:commons-codec:1.15")
 
     // JetBrains Static Analysis
-    compileOnly("org.jetbrains:annotations:24.0.1")
+    compileOnlyApi("org.jetbrains:annotations:24.0.1")
 
     // SLF4J
     implementation("org.slf4j:slf4j-api:1.7.32")

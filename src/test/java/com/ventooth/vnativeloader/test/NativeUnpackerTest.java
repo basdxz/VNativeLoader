@@ -11,7 +11,7 @@ class NativeUnpackerTest {
 
     @BeforeAll
     static void init() {
-        NATIVE_UNPACKER = VNativeLoaderAPI.nativeUnpacker();
+        NATIVE_UNPACKER = VNativeLoaderAPI.createUnpacker();
     }
 
     @AfterAll

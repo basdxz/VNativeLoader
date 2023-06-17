@@ -11,8 +11,8 @@ import java.nio.file.Path;
 
 // TODO: Documentation
 @NoArgsConstructor
-public class Linker implements VNativeLinker {
-    private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader|VNativeLinker");
+public final class Linker implements VNativeLinker {
+    private static final Logger LOG = LoggerFactory.getLogger("VNativeLoader|Linker");
 
     @Override
     public void linkNative(@NonNull Path nativeFilePath) throws UnsatisfiedLinkError {

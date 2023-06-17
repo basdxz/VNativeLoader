@@ -1,19 +1,19 @@
 package com.ventooth.vnativeloader.api;
 
-import lombok.NonNull;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Path;
 
 // TODO: Documentation
 public interface VNativeUnpacker {
-    Path unpackNative(@NonNull String classPathName, @NonNull Path nativeFilePath) throws IOException;
+    Path unpackNative(@NotNull String classPathName, @NotNull Path nativeFilePath) throws IOException;
 
-    Path unpackNative(@NonNull URL url, @NonNull Path nativeFilePath) throws IOException;
+    Path unpackNative(@NotNull URI uri, @NotNull Path nativeFilePath) throws IOException;
 
-    Path unpackNative(@NonNull InputStream inputStream, @NonNull Path nativeFilePath) throws IOException;
+    Path unpackNative(@NotNull InputStream inputStream, @NotNull Path nativeFilePath) throws IOException;
 
-    Path unpackNative(byte @NonNull [] bytes, @NonNull Path nativeFilePath) throws IOException;
+    Path unpackNative(byte @NotNull [] bytes, @NotNull Path nativeFilePath) throws IOException;
 }

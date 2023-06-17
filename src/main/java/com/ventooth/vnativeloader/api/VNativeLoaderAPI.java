@@ -1,77 +1,69 @@
 package com.ventooth.vnativeloader.api;
 
 
-import com.ventooth.vnativeloader.internal.Linker;
 import com.ventooth.vnativeloader.internal.Loader;
-import com.ventooth.vnativeloader.internal.NameMapper;
-import com.ventooth.vnativeloader.internal.Unpacker;
-import lombok.NonNull;
+import com.ventooth.vnativeloader.internal.VNativeLoaderInternal;
 import lombok.experimental.UtilityClass;
+import lombok.val;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
+import java.net.URI;
 import java.nio.file.Path;
 
+
 // TODO: Documentation
+@SuppressWarnings("unused")
 @UtilityClass
 public final class VNativeLoaderAPI {
-    private static final NameMapper NATIVE_NAME_MAPPER;
-    private static final Unpacker NATIVE_UNPACKER;
-    private static final Linker NATIVE_LINKER;
-    private static final Loader NATIVE_LOADER;
-
-    static {
-        NATIVE_NAME_MAPPER = new NameMapper();
-        NATIVE_UNPACKER = new Unpacker();
-        NATIVE_LINKER = new Linker();
-        NATIVE_LOADER = new Loader(NATIVE_NAME_MAPPER,
-                                   NATIVE_UNPACKER,
-                                   NATIVE_LINKER,
-                                   defaultNativesDirectory());
-    }
-
-    public static void loadNative(@NonNull String nativeName)
+    public static void loadNative(@NotNull String nativeName)
             throws IOException, UnsatisfiedLinkError {
-        NATIVE_LOADER.loadNative(nativeName);
+        VNativeLoaderInternal.loader().loadNative(nativeName);
     }
 
-    public static void loadNative(@NonNull String nativeName, @NonNull String classPathName)
+    public static void loadNative(@NotNull String nativeName, @NotNull String classPathName)
             throws IOException, UnsatisfiedLinkError {
-        NATIVE_LOADER.loadNative(nativeName, classPathName);
+        VNativeLoaderInternal.loader().loadNative(nativeName, classPathName);
     }
 
-    public static void loadNative(@NonNull String nativeName, @NonNull URL url)
+    public static void loadNative(@NotNull String nativeName, @NotNull URI uri)
             throws IOException, UnsatisfiedLinkError {
-        NATIVE_LOADER.loadNative(nativeName, url);
+        VNativeLoaderInternal.loader().loadNative(nativeName, uri);
     }
 
-    public static void loadNative(@NonNull String nativeName, @NonNull InputStream inputStream)
+    public static void loadNative(@NotNull String nativeName, @NotNull InputStream inputStream)
             throws IOException, UnsatisfiedLinkError {
-        NATIVE_LOADER.loadNative(nativeName, inputStream);
+        VNativeLoaderInternal.loader().loadNative(nativeName, inputStream);
     }
 
-    public static void loadNative(@NonNull String nativeName, byte @NonNull [] bytes)
+    public static void loadNative(@NotNull String nativeName, byte @NotNull [] bytes)
             throws IOException, UnsatisfiedLinkError {
-        NATIVE_LOADER.loadNative(nativeName, bytes);
+        VNativeLoaderInternal.loader().loadNative(nativeName, bytes);
     }
 
-    public static VNativeNameMapper nativeNameMapper() {
-        return NATIVE_NAME_MAPPER;
+    public static VNativeLoader<?> createLoader() {
+        val mapper = createNameMapper();
+        val unpacker = createUnpacker();
+        val linker = createLinker();
+        val nativesDirectory = nativesDirectory();
+
+        return new Loader(mapper, unpacker, linker, nativesDirectory);
     }
 
-    public static VNativeUnpacker nativeUnpacker() {
-        return NATIVE_UNPACKER;
+    public static VNativeNameMapper createNameMapper() {
+        return VNativeLoaderInternal.createNameMapper();
     }
 
-    public static VNativeLoader<?> createNativeLoader() {
-        return new Loader(NATIVE_NAME_MAPPER,
-                          NATIVE_UNPACKER,
-                          NATIVE_LINKER,
-                          defaultNativesDirectory());
+    public static VNativeUnpacker createUnpacker() {
+        return VNativeLoaderInternal.createUnpacker();
     }
 
-    public static Path defaultNativesDirectory() {
-        return Path.of(System.getProperty("user.dir"), "natives");
+    public static VNativeLinker createLinker() {
+        return VNativeLoaderInternal.createLinker();
+    }
+
+    public static Path nativesDirectory() {
+        return VNativeLoaderInternal.nativesDirectory();
     }
 }

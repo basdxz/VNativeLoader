@@ -2,6 +2,7 @@ package com.ventooth.vnativeloader.test;
 
 import com.ventooth.vnativeloader.api.VNativeLoader;
 import com.ventooth.vnativeloader.api.VNativeLoaderAPI;
+import com.ventooth.vnativeloader.internal.Unpacker;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 
@@ -11,7 +12,7 @@ class NativeLoaderTest {
 
     @BeforeAll
     static void init() {
-        NATIVE_LOADER = VNativeLoaderAPI.createNativeLoader();
+        NATIVE_LOADER = VNativeLoaderAPI.createLoader();
     }
 
     @AfterAll
