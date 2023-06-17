@@ -1,6 +1,5 @@
 package com.ventooth.vnativeloader.api;
 
-
 import com.ventooth.vnativeloader.internal.Loader;
 import com.ventooth.vnativeloader.internal.VNativeLoaderInternal;
 import lombok.experimental.UtilityClass;
@@ -11,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.nio.file.Path;
-
 
 // TODO: Documentation
 @SuppressWarnings("unused")
