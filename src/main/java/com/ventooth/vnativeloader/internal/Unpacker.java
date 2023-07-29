@@ -1,7 +1,7 @@
 package com.ventooth.vnativeloader.internal;
 
-import com.ventooth.vnativeloader.api.VNativeUnpacker;
 import com.ventooth.vnativeloader.api.VNativeLoaderAPI;
+import com.ventooth.vnativeloader.api.VNativeUnpacker;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.val;
@@ -27,7 +27,7 @@ public final class Unpacker implements VNativeUnpacker {
 
         try (val nativeInputStream = classLoader.getResourceAsStream(classPathName)) {
             if (nativeInputStream == null)
-                throw new IOException("Failed to get native from classpath: %s".formatted(classPathName));
+                throw new IOException(String.format("Failed to get native from classpath: %s", classPathName));
 
             return unpackNative(nativeInputStream, nativeFilePath);
         }
@@ -37,7 +37,7 @@ public final class Unpacker implements VNativeUnpacker {
     public Path unpackNative(@NonNull URI uri, @NonNull Path nativeFilePath) throws IOException {
         try (val nativeInputStream = uri.toURL().openStream()) {
             if (nativeInputStream == null)
-                throw new IOException("Failed to get native from URI: %s ".formatted(uri));
+                throw new IOException(String.format("Failed to get native from URI: %s ", uri));
 
             return unpackNative(nativeInputStream, nativeFilePath);
         }
@@ -52,7 +52,7 @@ public final class Unpacker implements VNativeUnpacker {
     @Override
     public Path unpackNative(byte @NonNull [] bytes, @NonNull Path nativeFilePath) throws IOException {
         if (Files.isDirectory(nativeFilePath))
-            throw new IOException("File path: %s is a directory".formatted(nativeFilePath.toAbsolutePath()));
+            throw new IOException(String.format("File path: %s is a directory", nativeFilePath.toAbsolutePath()));
 
         val expectedHash = DigestUtils.sha256Hex(bytes);
         LOG.trace("Expected native hash: {}", expectedHash.toUpperCase());
@@ -76,13 +76,14 @@ public final class Unpacker implements VNativeUnpacker {
         PathHelper.writeFile(bytes, nativeFilePath);
 
         val writtenBytes = PathHelper.readFile(nativeFilePath);
-        if (writtenBytes.isEmpty())
-            throw new IOException("Failed to unpack native, expected file not created: %s".formatted(nativeFilePath));
+        if (!writtenBytes.isPresent())
+            throw new IOException(String.format("Failed to unpack native, expected file not created: %s", nativeFilePath));
 
         val writtenFileHash = DigestUtils.sha256Hex(writtenBytes.get());
         if (!writtenFileHash.equalsIgnoreCase(expectedHash))
-            throw new IOException("Hash mismatch on unpacked native; found: %s expected: %s"
-                                          .formatted(writtenFileHash.toUpperCase(), expectedHash.toUpperCase()));
+            throw new IOException(String.format("Hash mismatch on unpacked native; found: %s expected: %s",
+                                                writtenFileHash.toUpperCase(),
+                                                expectedHash.toUpperCase()));
 
         return nativeFilePath;
     }

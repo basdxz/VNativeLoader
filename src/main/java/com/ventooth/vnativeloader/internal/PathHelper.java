@@ -18,7 +18,7 @@ public final class PathHelper {
 
     public static Optional<byte[]> readFile(Path filePath) throws IOException {
         if (Files.isDirectory(filePath))
-            throw new IOException("File path: %s is a directory".formatted(filePath.toAbsolutePath()));
+            throw new IOException(String.format("File path: %s is a directory", filePath.toAbsolutePath()));
 
         if (!Files.isRegularFile(filePath)) {
             LOG.trace("File: {} not found", filePath.toAbsolutePath());
@@ -33,7 +33,7 @@ public final class PathHelper {
 
     public static void writeFile(byte[] bytes, Path filePath) throws IOException {
         if (Files.isDirectory(filePath))
-            throw new IOException("File path: %s is a directory".formatted(filePath.toAbsolutePath()));
+            throw new IOException(String.format("File path: %s is a directory", filePath.toAbsolutePath()));
 
         if (Files.deleteIfExists(filePath))
             LOG.trace("Found and deleted existing file: {}", filePath.toAbsolutePath());

@@ -4,6 +4,7 @@ import lombok.experimental.UtilityClass;
 import lombok.val;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 @UtilityClass
 public final class VNativeLoaderInternal {
@@ -35,6 +36,6 @@ public final class VNativeLoaderInternal {
     }
 
     public static Path nativesDirectory() {
-        return Path.of(System.getProperty("user.dir"), "natives");
+        return Paths.get(System.getProperty("user.dir"), "natives");
     }
 }

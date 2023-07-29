@@ -21,7 +21,7 @@ public final class Linker implements VNativeLinker {
             System.load(fullPath);
             LOG.trace("Linked native using JNI: {}", fullPath);
         } catch (UnsatisfiedLinkError e) {
-            throw new UnsatisfiedLinkError("Failed to link native: %s".formatted(fullPath));
+            throw new UnsatisfiedLinkError(String.format("Failed to link native: %s", fullPath));
         }
     }
 }
