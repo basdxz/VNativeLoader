@@ -39,6 +39,8 @@ publishing {
             groupId = projectGroup
             artifactId = projectName
             version = project.version
+
+            artifact sourceJar
         }
     }
     repositories {

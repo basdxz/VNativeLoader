@@ -45,6 +45,12 @@ idea {
     }
 }
 
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    archiveClassifier.set('sources')
+}
+build.dependsOn(sourceJar)
+
 apply from: 'repositories.gradle'
 apply from: 'dependencies.gradle'
 apply from: 'publish.gradle'
